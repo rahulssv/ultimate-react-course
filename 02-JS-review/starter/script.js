@@ -142,3 +142,108 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
+
+const books=getBook(3);
+
+
+
+// install quokka extension
+
+
+
+// const title=books.author;
+// title
+const {title,author,publicationDate,reviews,genres,pages,hasMovieAdaptation}=books
+console.log(title,author,publicationDate,reviews,genres);
+const [primaryGenre,secondaryGenre, ...otherrGenres]=genres
+const [...otherrGenre]=genres
+console.log(otherrGenre)
+console.log(primaryGenre,secondaryGenre, otherrGenres)
+const newGenres= [...genres, "epic fantacy"]   // spread operator
+newGenres
+
+const updatedBook ={...books,moviePublicationDate:'2001-08-11',pages:1210} //we can overwrite pages i.e content of books
+updatedBook
+
+
+const summary=`${title},is a ${pages} pages book, was written by ${author} in ${publicationDate.split("-")[0]}`  // template literal
+summary
+
+
+
+// ternaries instead of if else
+
+const pagesRange=pages>1000? 'over one thousand':'less than one thousand';
+pagesRange
+console.log(`the book has ${pagesRange} pages`)
+
+// function getYear(str){
+//   return str.split("-")[0];
+// }
+const getYear= (str) => str.split("-")[0];
+console.log(getYear(publicationDate))
+
+//short circuiting
+console.log(true && "some string");
+console.log(false && "some string");
+console.log(hasMovieAdaptation && "some string");
+
+// falsy :0,', null,undefined
+console.log('jonas')
+console.log(0 && "some string")
+console.log("" && "some string")
+console.log(1 || "some string")
+
+ const spanishTranslation= books.translations.spanish|| "Not Translated"
+ spanishTranslation;
+
+
+
+// optional chaining ?.
+ console.log(books.reviews.librarything?.reviewsCount)
+ const countWrong=books.reviews.librarything?.reviewsCount|| "no data"
+ countWrong
+
+ // knowledge collasing operator
+ const count= books.reviews?.librarything?.reviewsCount?? "no data"
+ count
+
+ const getTotalcount=(book)=>{
+  const goodread=book.reviews?.librarything?.reviewsCount;
+  return goodread;
+ }
+ console.log(getTotalcount(books))
+
+
+ 
+ // functional array method
+ const bookss=getBooks();
+ const x=[1,2,3,4,5].map((el)=>el*2);
+ console.log(x)
+
+ const titles=bookss.map((booksss)=>booksss.title);
+ console.log(titles)
+
+ const essentialData= bookss.map((booksss)=>{
+    return [booksss.title,booksss.author]
+    //   title:booksss.title,
+    //   author:booksss.author,
+    // };
+ }); 
+ essentialData
+
+ const essentialDataa= bookss.map((booksss)=>{
+  return {
+    title:booksss.title,
+    author:booksss.author,
+  };
+}); 
+essentialDataa
+const essentialDataaa= bookss.map((booksss)=>({
+  title:booksss.title,
+  author:booksss.author,
+  reviewsCount:getTotalcount(booksss)
+}))
+essentialDataaa
+
+
