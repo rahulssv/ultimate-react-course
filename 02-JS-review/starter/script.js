@@ -265,3 +265,40 @@ array
 const sorted2 = array.slice().sort((a,b)=>b-a) // immutable
 sorted2
 array
+
+const sortedByPages=bookss.slice().sort((a,b)=>b.pages-a.pages);
+sortedByPages
+
+// 1. Add Book object to array
+const newBook={
+  id:8,
+  title: "Harry Potter and the Chamber of secrets",
+
+};
+const afterAdd=[...bookss,newBook]
+afterAdd
+
+const booksAfterDelete=afterAdd.filter((book)=>book.id!==3) //soft delete
+booksAfterDelete
+
+//3 update the book in the array
+const booksAfterUpdate= booksAfterDelete.map((book)=>book.id===1?{...book,pages:1121}:book)
+booksAfterUpdate
+
+
+// Asynchronous js
+console.log(fetch("https://jsonplaceholder.typicode.com/todos"));
+fetch("https://jsonplaceholder.typicode.com/todos").then((res)=>res.json()).then((data)=>console.log(data))
+console.log("rahul")
+
+
+async function getTodos(){
+  const res=await fetch("https://jsonplaceholder.typicode.com/todos");
+  const data =await res.json;
+  console.log(data);
+  return data;
+}
+
+const todos= getTodos();
+todos  //result of async is always a promise
+console.log("vishwakarma")
