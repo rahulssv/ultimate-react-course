@@ -67,21 +67,31 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas=pizzaData.length
   return (
     <div className="menu">
       <h2>Our Menu</h2>
-      <Pizza
-        name="Pizza Prosciutto"
-        ingredient="Tomato, mozarella, and pepperoni"
-        photoName="pizzas/funghi.jpg"
-        price={399}
-      />
-      <Pizza
-        name="Pizza Prosciutto"
-        ingredient="Tomato, mozarella, and pepperoni"
-        photoName="pizzas/funghi.jpg"
-        price={399}
-      />
+      
+      {pizzas>0 ? 
+      <React.Fragment>
+      <p>Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven, all organic, all delicious.</p>
+      <ul className="pizzas">
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObject={pizza} key={pizza.name} />
+        ))}
+      </ul>
+      </React.Fragment>
+      :<p>We are still working on menu. Please come back later:)</p>
+      }
+      {/* <div className="menu">
+      <h2>Our Menu</h2>
+      {pizzas>0 && <ul className="pizzas">
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObject={pizza} key={pizza.name} />
+        ))}
+      </ul>//:<p>We are still working on menu. Please come back later:)</p>
+      } */}
+
       {/* <Pizza/>
     <Pizza/> */}
     </div>
@@ -93,34 +103,78 @@ function Footer() {
   console.log(hour);
   const openHour = 12;
   const closeHour = 22;
-  hour >= openHour && hour <= closeHour
-    ? alert("We are open")
-    : alert("we are closed");
+  const isOpen=hour >= openHour && hour <= closeHour
+    // ? "We are open"
+    // : "we are closed";
+    // if(!isOpen) return (
+    //   <p>Closed</p>
+    // )
   return (
+    // <footer className="footer">
+    //   {isOpen && (
+    //     <div className="order">
+    //       <p>We are open till {closeHour}:00. Come visit us or order online</p>
+    //       <button className="btn">Order</button>
+    //     </div>
+    //   )}
+    // </footer>
+
     <footer className="footer">
-      {new Date().toLocaleTimeString()}. We are currently open
-    </footer>
+    {isOpen ?(<Order closeHour={closeHour} openHour={openHour}/> ):<p> We are happy to welcome you between {openHour}:00 and {closeHour}:00</p>}
+  </footer>
   );
 }
-
-//never nest function declarations
-function Pizza(props) {
-  const style = {
-    color: "green",
-    fontSize: "12 px",
-    textTransform: "uppercase",
-  };
-  return (
-    <div className="pizza">
-      <img src={props.photoName} />
-      <div>
-        <h3 style={style}>{props.name}</h3>
-        <p>{props.ingredient}</p>
-        <span>{props.price}</span>
-      </div>
-
-      
+// function Order(props){
+//   return ((
+//     <div className="order">
+//       <p>We are open till {props.closeHour}:00. Come visit us or order online</p>
+//       <button className="btn">Order</button>
+//     </div>
+//   ))
+// }
+function Order({closeHour,openHour}){
+  return ((
+    <div className="order">
+      <p>We are open till {closeHour}:00. Come visit us or order online</p>
+      <button className="btn">Order</button>
     </div>
+  ))
+}
+//never nest function declarations
+// function Pizza(props) {
+//   // const style = {
+//   //   color: "green",
+//   //   fontSize: "12 px",
+//   //   textTransform: "uppercase",
+//   // };
+//   if(props.pizzaObject.soldOut) return null;
+//   return (
+//     <li className="pizza">
+//       <img src={props.pizzaObject.photoName} alt="pizaa img"/>
+//       <div>
+//         <h3>{props.pizzaObject.name}</h3>
+//         <p>{props.pizzaObject.ingredients}</p>
+//         <span>{"$" + props.pizzaObject.price}</span>
+//       </div>
+//     </li>
+//   );
+// }
+function Pizza({pizzaObject}) {
+  // const style = {
+  //   color: "green",
+  //   fontSize: "12 px",
+  //   textTransform: "uppercase",
+  // };
+  // if(pizzaObject.soldOut) return null;
+  return (
+    <li className={`pizza ${pizzaObject.soldOut?'sold-out':''}`}>
+      <img src={pizzaObject.photoName} alt="pizaa img"/>
+      <div>
+        <h3>{pizzaObject.name}</h3>
+        <p>{pizzaObject.ingredients}</p>
+        <span>{(pizzaObject.soldOut)?"Sold Out":"$" + pizzaObject.price}</span>
+      </div>
+    </li>
   );
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -129,5 +183,3 @@ root.render(
     <App />
   </React.StrictMode>
 ); //render twice
-
- 
