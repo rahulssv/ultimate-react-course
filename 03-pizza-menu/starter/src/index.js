@@ -65,6 +65,7 @@ function Header() {
     </header>
   );
 }
+
 function Menu() {
   return (
     <div className="menu">
